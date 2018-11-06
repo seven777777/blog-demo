@@ -5,13 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="http://webapi.amap.com/maps?v=1.4.10&key=ea0f1aa1d5ac2376b33df517a344d3cd&plugin=Map3D,AMap.DistrictLayer,AMap.Geocoder,AMap.Scale,AMap.ToolBar,AMap.DistrictSearch"></script>
+    <style>
+        body,html{
+            margin: 0;
+            padding: 0;
+        }
+        .map{
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
-    <script>
-        let arr1=[1,2,3];
-        let arr2=arr1;
-        console.log(arr1,arr2)
-        arr2.push(4);
-    </script>   
+    <div class="map" id="container"></div>     
 </body>
+<script>
+let cityArr = ["宜昌", "荆州", "襄阳", "黄冈", "宿迁", "扬州", "泰州", "淮安", "盐城", "连云港", "镇江", "湖州", "上饶", "九江", "宜春", "赣州", "鞍山", "德阳", "绵阳", "揭阳", "汕头", "江门", "湛江", "潮州", "珠海", "肇庆", "临沂", "威海", "济宁", "淄博", "菏泽", "柳州", "桂林", "咸阳", "三亚", "海口", "滁州", "芜湖", "蚌埠", "铜陵", "阜阳", "吉林", "宁德", "漳州", "莆田", "曲靖", "信阳", "南阳", "商丘", "新乡", "洛阳", "许昌", "驻马店", "岳阳", "常德", "株洲", "湘潭", "衡阳", "唐山", "廊坊", "沧州", "秦皇岛", "邢台", "邯郸", "大庆", "银川", "遵义", "西宁", "包头", "呼和浩特"]
+ //初始化地图对象，加载地图
+var map = new AMap.Map("container", {
+    resizeEnable: true,
+    center: [116.397428, 39.90923],//地图中心点
+    zoom: 10 //地图显示的缩放级别
+});
+function initPolygon(city){
+// 创建行政区查询对象
+var district = new AMap.DistrictSearch({
+    // 返回行政区边界坐标等具体信息
+    extensions: 'all',
+    // 设置查询行政区级别为 市
+    level: 'city'
+})
+    
+    district.search(city, function(status, result) {
+        // 获取朝阳区的边界信息
+        var bounds = result.districtList[0].boundaries
+        var polygons = []
+        if (bounds) {
+            for (var i = 0, l = bounds.length; i < l; i++) {
+                //生成行政区划polygon
+                var polygon = new AMap.Polygon({
+                    map: map,
+                    strokeWeight: 1,
+                    path: bounds[i],
+                    fillOpacity: 0.7,
+                    fillColor: '#CCF3FF',
+                    strokeColor: '#CC66CC'
+                })
+                polygon.on('click', function(e){
+                    alert(1)
+                    console.log(e)
+                });
+                polygons.push(polygon)
+            }
+        }
+        
+        // 地图自适应
+        map.setFitView()
+    })
+}
+// cityArr.forEach(item=>{
+//     initPolygon(item)
+// })
+for(var i=0;i<cityArr.length;i++){
+    initPolygon(cityArr[i])
+}
+
+
+
+</script>
 </html>
