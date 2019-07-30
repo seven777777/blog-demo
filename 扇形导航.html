@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>扇形导航</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css">
+    <script src="js/modernizr-2.6.2.min.js"></script>
+</head>
+<style>
+    * {
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: relative
+    }
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    .csstransforms .cn-wrapper {
+        width: 220px;
+        height: 220px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) scale(1);
+        border-radius: 50%;
+        overflow: hidden;
+        background: white;
+    }
+    .csstransforms .cn-center{
+        width: 6em;
+        height: 6em;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background: white;
+    }
+    .csstransforms .cn-wrapper ul{
+        height: 100%;
+    }
+    .csstransforms .cn-wrapper li {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 10em;
+        height: 10em;
+        transform-origin: 100% 100%;
+        margin-top: -10em;
+        margin-left: -10em;
+        background: white;
+        overflow: hidden;
+        padding: 0.2em;
+        background: rosybrown;
+        border: 3px solid white;
+        cursor: pointer;
+    }
+    .csstransforms .cn-wrapper li:first-child {
+        transform: skew(30deg);
+    }
+    .csstransforms .cn-wrapper li:nth-child(2) {
+        transform: rotate(60deg) skew(30deg);
+    } 
+    .csstransforms .cn-wrapper li:nth-child(3) {
+        transform: rotate(120deg) skew(30deg);
+    } 
+    .csstransforms .cn-wrapper li:nth-child(4) {
+        transform: rotate(180deg) skew(30deg);
+    } 
+    .csstransforms .cn-wrapper li:nth-child(5) {
+        transform: rotate(240deg) skew(30deg);
+    } 
+    .csstransforms .cn-wrapper li:nth-child(6) {
+        transform: rotate(300deg) skew(30deg);
+    } 
+    .csstransforms .cn-wrapper li:hover{
+        background: salmon;
+    }
+    .csstransforms .cn-wrapper li a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        transform: skew(-30deg) rotate(-60deg) scale(1);
+        border-radius: 50%;
+        text-decoration: none;
+        position: absolute;
+        bottom: -2.25em;
+        right: -2.25em;
+        font-size: 12px;
+        color: #fff;
+        padding-top: 1.8em;
+        /* background: rosybrown; */
+    }
+</style>
+
+<body>
+    <div class="cn-wrapper opened-nav" id="cn-wrapper">
+        <ul>
+            <li><a href="#"><span class="icon-picture"></span>菜单一</a></li>
+            <li><a href="#"><span class="icon-headphones"></span>菜单二</a></li>
+            <li><a href="#"><span class="icon-home"></span>菜单三</a></li>
+            <li><a href="#"><span class="icon-facetime-video"></span>菜单四</a></li>
+            <li><a href="#"><span class="icon-envelope-alt"></span>菜单五</a></li>
+            <li><a href="#"><span class="icon-envelope-alt"></span>菜单六</a></li>
+        </ul>
+        <div class="cn-center"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: aqua;
+            margin-top: 50px;
+            opacity: 0;
+            left: 100px;
+            transition: all 2s;
+            position: absolute;
+        }
+        .anm{
+            animation: myAnimate 5s;
+        }
+        @keyframes myAnimate{
+            from {background: red;}
+            to {background: yellow;}
+        }
+
+        #zt{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="time">0</div>
+    <div id="box"></div>
+    <button id="zt">暂停</button>
+
+</body>
+<script>
+let time = document.getElementById('time')
+let box = document.getElementById('box')
+let zt = document.getElementById('zt')
+let n = 0
+let opacity = 1
+let isStop = false
+
+function myTimer(){
+    return setInterval(()=>{
+        console.log(n)
+        if(n<15){
+            n++
+            time.innerText=n
+            if(n == 5){
+                box.style.opacity = 1
+                box.style.left = 0
+            }
+            if(n == 10){
+                box.style.opacity = 0
+                box.style.left = '100px'
+            }
+
+        }else{
+            alert('time up!')
+            clearInterval(timer)
+        }
+    },1000)
+}
+let timer = myTimer()
+// let timer = setInterval(()=>{
+//     if(n<15){
+//         n++
+//         time.innerText=n
+//         if(n == 5){
+//             // box.style.opacity = 0.8
+//             // box.classList.add('anm')
+//             // var myTime = setInterval(()=>{
+//             //     opacity += -0.1
+//             //     box.style.opacity = opacity
+//             //     console.log(opacity)
+//             //     if(opacity <= 0){
+//             //         clearInterval(myTime)
+//             //     }
+//             // },100)
+//             box.style.opacity = 1
+//             box.style.left = 0
+//         }
+//         if(n == 10){
+//             // box.style.opacity = 0.8
+//             // box.classList.add('anm')
+//             // myTime = setInterval(()=>{
+//             //     opacity += 0.1
+//             //     box.style.opacity = opacity
+//             //     console.log(opacity)
+//             //     if(opacity >= 1){
+//             //         clearInterval(myTime)
+//             //     }
+//             // },100)
+//             box.style.opacity = 0
+//             box.style.left = '100px'
+//         }
+
+//     }else{
+//         alert('time up!')
+//         clearInterval(timer)
+//     }
+// },1000)
+
+zt.addEventListener('click',()=>{
+    if(!isStop){
+        isStop = true
+        zt.innerText='开始'
+        clearInterval(timer)
+    }else{
+        isStop = false
+        zt.innerText='暂停'
+        timer = myTimer()
+    }
+})
+
+</script>
+</html>
