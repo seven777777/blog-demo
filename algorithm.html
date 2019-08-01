@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>算法</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 贪婪算法
+    // console.log((Math.random()*1000).toFixed(0))
+    let arrObj = {}
+    for(var i=0; i<50; i++){
+        arrObj[i] = []
+        for(var n=0; n<3; n++){
+            let item = Number((Math.random()*1000).toFixed(0))
+            arrObj[i].push(item)
+        }
+    }
+    // console.log(arrObj)
+
+    let needNum = [13,4,199,6,32,7,301]
+    let finalNumArr = []
+
+    if(needNum.length){
+        let best = null;
+        let cover = new Set()
+        for(let item in arrObj){
+            let itemVal = arrObj[item]
+            console.log(item,itemVal)
+        }
+    }
+
+</script>
+</html>
