@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS实现固定宽高比响应式布局</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        p{
+            margin: 0;
+        }
+        .box1{
+            width: 20vw;
+            height: 10vw;
+            background-color:aquamarine;
+        }
+        .box2{
+            width: 20%;
+            height: 0;
+            padding-top: 10%;
+            background-color: brown;
+            margin-top: 20px;
+        }
+
+        .testMain{
+            width: 80%;
+            height: 500px;
+            margin: 20px auto;
+            background-color: #fff;
+            display: flex;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            align-content: flex-start;
+        }
+        .item{
+            width: 33%;
+            height: 0;
+            padding-top: 11%;
+            margin-right: 0.5%;
+            margin-bottom: 0.5%;
+            box-sizing: border-box;
+            border: 1px solid #999999;
+            position: relative;
+        }
+        .item:nth-child(3n){
+            margin-right: 0;
+        }
+        .itemInner{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: url('./images/testpic01.jpg') center center no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        .innerTxt{
+            margin: 0;
+            padding: 0 20px;
+            font-size: 14px;
+            line-height: 2;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .item2{
+            width: 33%;
+            margin-right: 0.5%;
+            margin-bottom: 0.5%;
+            box-sizing: border-box;
+            border: 1px solid #999999;
+            position: relative;
+        }
+        .item2:nth-child(3n){
+            margin-right: 0;
+        }
+        .item2Inner{
+            padding: 12px;
+            display: flex;
+        }
+        .item2Inner-pic{
+            width: 40%;
+            height: 0;
+            padding-top: 30%;
+            background: url('./images/testpic01.jpg') center center no-repeat;
+            background-size: cover;
+            flex-shrink: 0;
+        }
+        .item2Inner-main{
+            flex: 1;
+            margin-left: 10px;
+        }
+        .item2Inner-main-title{
+            font-size: 14px;
+            color: #333;
+            line-height: 2;
+        }
+        .item2Inner-main-txt{
+            font-size: 12px;
+            color: #666;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- 基础实现 -->
+    <!-- 通过 vw属性 -->
+    <div class="box1"></div>
+    <!-- 通过 padding 百分比是根据宽高的值为基准 -->
+    <div class="box2"></div>
+
+    <center style="margin-top: 20px;">用一个宽度为80%的盒子代替右侧自适应宽度的布局</center>
+    <h1>方案一</h1>
+    <div class="testMain">
+        <div class="item">
+            <div class="itemInner">
+                <p class="innerTxt">这是一段测试标题</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemInner">
+                <p class="innerTxt">这是一段测试标题</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemInner">
+                <p class="innerTxt">这是一段测试标题</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemInner">
+                <p class="innerTxt">这是一段测试标题</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemInner">
+                <p class="innerTxt">这是一段测试标题</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemInner">
+                <p class="innerTxt">这是一段测试标题</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemInner">
+                <p class="innerTxt">这是一段测试标题</p>
+            </div>
+        </div>
+    </div>
+
+    <h1>方案二</h1>
+    <div class="testMain">
+        <div class="item2">
+            <div class="item2Inner">
+                <div class="item2Inner-pic"></div>
+                <div class="item2Inner-main">
+                    <p class="item2Inner-main-title">标题</p>
+                    <p class="item2Inner-main-txt">这是一段测试文字</p>
+                </div>
+            </div>
+        </div>
+        <div class="item2">
+            <div class="item2Inner">
+                <div class="item2Inner-pic"></div>
+                <div class="item2Inner-main">
+                    <p class="item2Inner-main-title">标题</p>
+                    <p class="item2Inner-main-txt">这是一段测试文字</p>
+                </div>
+            </div>
+        </div>
+        <div class="item2">
+            <div class="item2Inner">
+                <div class="item2Inner-pic"></div>
+                <div class="item2Inner-main">
+                    <p class="item2Inner-main-title">标题</p>
+                    <p class="item2Inner-main-txt">这是一段测试文字</p>
+                </div>
+            </div>
+        </div>
+        <div class="item2">
+            <div class="item2Inner">
+                <div class="item2Inner-pic"></div>
+                <div class="item2Inner-main">
+                    <p class="item2Inner-main-title">标题</p>
+                    <p class="item2Inner-main-txt">这是一段测试文字</p>
+                </div>
+            </div>
+        </div>
+        <div class="item2">
+            <div class="item2Inner">
+                <div class="item2Inner-pic"></div>
+                <div class="item2Inner-main">
+                    <p class="item2Inner-main-title">标题</p>
+                    <p class="item2Inner-main-txt">这是一段测试文字</p>
+                </div>
+            </div>
+        </div>
+        <div class="item2">
+            <div class="item2Inner">
+                <div class="item2Inner-pic"></div>
+                <div class="item2Inner-main">
+                    <p class="item2Inner-main-title">标题</p>
+                    <p class="item2Inner-main-txt">这是一段测试文字</p>
+                </div>
+            </div>
+        </div>
+        <div class="item2">
+            <div class="item2Inner">
+                <div class="item2Inner-pic"></div>
+                <div class="item2Inner-main">
+                    <p class="item2Inner-main-title">标题</p>
+                    <p class="item2Inner-main-txt">这是一段测试文字</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
