@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>各种高度</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=3.0&ak=lWatZlbccEUBCrulDO1pw708iNgchGyl"></script>
+    <style>
+        body,html{
+            margin: 0;
+            padding: 0;
+            color:red;
+        }
+        .content{
+            width: 100%;
+            padding: 30px;
+            text-align:center;
+        }
+        #demo{
+            width: 100px;
+            height: 100px;
+            border: 15px solid rgba(0,0,0,.3);
+            background-color: sandybrown;
+            background-clip: content-box;
+            margin: 15px auto;
+            padding: 15px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div id="demo"></div>
+        <p>clientHeight：<span class="clientHeight"></span></p>
+        <p>offsetHeight：<span class="offsetHeight"></span></p>
+        <p>offsetHeight-true：<span class="offsetHeightTrue"></span></p>
+        <p>$height：<span class="height"></span></p>
+        <p>$innerHeight：<span class="innerHeight"></span></p>
+        <p>$outerHeight：<span class="outerHeight"></span></p>
+        <p>$outerHeight-true：<span class="outerHeightTrue"></span></p>
+    </div>
+    
+    
+</body>
+<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+<script>
+    $('.clientHeight').html(document.getElementById('demo').clientHeight)
+    $('.offsetHeight').html(document.getElementById('demo').offsetHeight)
+
+    var div = document.getElementById("demo");
+    var computedStyle = getComputedStyle(div, null);
+    var marginHeight = Number(computedStyle.marginTop.split('px')[0]) + Number(computedStyle.marginBottom.split('px')[0])
+    $('.offsetHeightTrue').html(document.getElementById('demo').offsetHeight + marginHeight)
+
+    $('.height').html($('#demo').height())
+    $('.innerHeight').html($('#demo').innerHeight())
+    $('.outerHeight').html($('#demo').outerHeight())
+    $('.outerHeightTrue').html($('#demo').outerHeight(true))
+</script>
+</html>
