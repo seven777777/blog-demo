@@ -7,6 +7,9 @@
     <title>各种高度</title>
     <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=3.0&ak=lWatZlbccEUBCrulDO1pw708iNgchGyl"></script>
     <style>
+        *{
+            box-sizing: border-box;
+        }
         body,html{
             margin: 0;
             padding: 0;
@@ -26,6 +29,34 @@
             margin: 15px auto;
             padding: 15px;
         }
+
+        .outBox{
+            width: 500px;
+            margin: 0 auto;
+            height: 300px;
+            overflow: auto;
+            /* position: relative; */
+            border: 1px solid sienna;
+        }
+        .innerBox{
+            /* position: relative; */
+            width: 100%;
+            height: 800px;
+            background-color: aquamarine;
+            background-image: url(./images/testpic01.jpg);
+            background-size: cover;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .inner-text-box{
+            width: 100%;
+            height: 100px;
+            background-color: burlywood;
+            margin-top:200px;
+        }
+        .tipBox{
+            text-align: center;
+        }
         
     </style>
 </head>
@@ -41,21 +72,54 @@
         <p>$outerHeight-true：<span class="outerHeightTrue"></span></p>
     </div>
     
+    <div class="outBox" id="outbox">
+        outbox
+        <div class="innerBox">
+            innerBox
+            <div class="inner-text-box" id="textBox">textBox</div>
+        </div>
+    </div>
+    <div class="tipBox">
+        <p>clientHeight：<span class="clientHeight-outbox"></span></p>
+        <p>$outerHeight：<span class="outerHeight-outbox"></span></p>
+        <p>scrollHeight：<span class="scrollHeight-outbox"></span></p>
+        <p>scrollTop：<span class="scrollTop-outbox"></span></p>
+        <p>textBox-offsetTop：<span class="offsetTop-textBox"></span></p>
+        <p>textBox-offset().top：<span class="offset_top-textBox"></span></p>
+    </div>
     
 </body>
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <script>
-    $('.clientHeight').html(document.getElementById('demo').clientHeight)
-    $('.offsetHeight').html(document.getElementById('demo').offsetHeight)
-
-    var div = document.getElementById("demo");
-    var computedStyle = getComputedStyle(div, null);
+    var demo = document.getElementById("demo");
+    var computedStyle = getComputedStyle(demo, null);
     var marginHeight = Number(computedStyle.marginTop.split('px')[0]) + Number(computedStyle.marginBottom.split('px')[0])
-    $('.offsetHeightTrue').html(document.getElementById('demo').offsetHeight + marginHeight)
+
+    $('.clientHeight').html(demo.clientHeight)
+    $('.offsetHeight').html(demo.offsetHeight)
+
+    $('.offsetHeightTrue').html(demo.offsetHeight + marginHeight)
 
     $('.height').html($('#demo').height())
     $('.innerHeight').html($('#demo').innerHeight())
     $('.outerHeight').html($('#demo').outerHeight())
     $('.outerHeightTrue').html($('#demo').outerHeight(true))
+
+
+    $('.clientHeight-outbox').html(document.getElementById('outbox').clientHeight)
+    $('.outerHeight-outbox').html($('#outbox').outerHeight())
+    // $('.scrollHeight-outbox').html(document.getElementById('outbox').scrollHeight)
+    $('.scrollHeight-outbox').html($('#outbox')[0].scrollHeight)
+
+    $('.scrollTop-outbox').html(document.getElementById('outbox').scrollTop)
+    $('.offsetTop-textBox').html(document.getElementById('textBox').offsetTop)
+    $('.offset_top-textBox').html($('#textBox').offset().top)
+
+    $('#outbox').on('scroll',()=>{
+        $('.scrollTop-outbox').html(document.getElementById('outbox').scrollTop)
+        // $('.scrollTop-outbox').html($('#outbox').scrollTop())
+        $('.offsetTop-textBox').html(document.getElementById('textBox').offsetTop)
+        $('.offset_top-textBox').html($('#textBox').offset().top)
+    })
 </script>
 </html>
