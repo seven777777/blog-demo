@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表布局</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul,li{ list-style-type: none;}
+        .list-wrap{
+            width: 1000px;
+            height: 500px;
+            background-color: blanchedalmond;
+            margin: 10px auto;
+        }
+        .list-wrap.flex{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .list-wrap.flex:after{
+            content: '';
+            width: 30%;
+            border:1px solid transparent;
+        }
+        .list-wrap.flex .listItem{
+            width: 30%;
+            background-color: salmon;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .list-wrap.grid{
+            display: grid;
+            grid-template-columns:repeat(4,1fr);
+            grid-gap: 10px;
+        }
+        .list-wrap.grid .listItem{
+            background-color: salmon;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+   <h1>方案一：父级添加after伪类法，解决最后一排数量不够两端分布的情况</h1>
+    <ul class="list-wrap flex">
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+    </ul>
+   <h1>方案二：grid栅格布局</h1>
+    <ul class="list-wrap grid">
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+        <li class="listItem"></li>
+    </ul>
+</body>
+<script>
+
+</script>
+</html>
