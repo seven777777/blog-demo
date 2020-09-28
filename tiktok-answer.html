@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>timeago</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        header{
+            width: 100%;
+            height: 50px;
+            background-color:bisque;
+            text-align: center;
+        }
+        .content{
+            min-height: calc(100vh - 50px - 100px);
+        }
+        footer{
+            height: 100px;
+            background-color:burlywood;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>头部</header>
+    <div class="content">
+        <table border="1"></table>
+        
+    </div>
+    <footer>尾部</footer>
+</body>
+<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+<script>
+// 题目3
+// time为时间戳
+function timeAgo(time){
+    var dateStart = new Date(time);//获取开始时间
+    var dateEnd = new Date();//获取当前时间
+    var dateDiff = dateEnd.getTime() - dateStart.getTime()//计算时间差 毫秒
+    
+    var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000));//计算出相差天数
+    // 计算小时差
+    var leave1=dateDiff%(24*3600*1000)    //计算天数后剩余的毫秒数
+    var hours=Math.floor(leave1/(3600*1000))//计算出小时数
+    //计算相差分钟数
+    var leave2=leave1%(3600*1000)    //计算小时数后剩余的毫秒数
+    var minutes=Math.floor(leave2/(60*1000))//计算相差分钟数
+    //计算相差秒数
+    var leave3=leave2%(60*1000)      //计算分钟数后剩余的毫秒数
+    var seconds=Math.round(leave3/1000)
+    console.log(" 相差 "+dayDiff+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
+    
+    let strMap = {
+        0:'天前',
+        1:'小时前',
+        2:'分钟前',
+        3:'刚刚'
+    }
+    let timeDiffArray = [dayDiff,hours,minutes,seconds]
+    let result = '刚刚'
+    for(var i = 0; i < timeDiffArray.length; i++){
+        let val = timeDiffArray[i]
+        if(val > 0){
+            result = (i < 3 ? val : '') + strMap[i]
+            break;
+        }
+    }
+
+    // 输入日期与当前时间相差超过2天就显示该日期
+    if(dayDiff && dayDiff>2){
+        result = dateStart.toLocaleDateString()
+    }
+
+    return result
+
+}
+timeAgo(1600933140000)
+
+// 题目4
+class Event {
+    constructor() {
+        this.events = {};
+    }
+    on(event,callback){
+        if(!this.events.hasOwnProperty(event)){
+            this.events[event] = []
+        }
+        if(typeof callback == 'function'){
+            this.events[event].push(callback)
+        }else{
+            throw new Error('缺少回调函数');
+        }
+        return this
+    }
+    trigger(event,...args){
+        if(this.events.hasOwnProperty(event)){
+            this.events[event].forEach((item,index,arr)=>{
+                item.apply(this,args)
+            })
+        }else {
+            throw new Error(`"${event}"事件未注册`);
+        }
+        return this
+    }
+    off(event,callback){
+        if(!this.events.hasOwnProperty(event)){
+            throw new Error(`"${event}"事件未注册`);
+        }else if(typeof callback != 'function'){
+            this.events[event] = []
+        }else{
+            this.events[event].forEach((item,index,arr)=>{
+                if(item == callback){
+                    arr.splice(index,1)
+                }
+            })
+        }
+        return this
+    }
+    once(event,callback){
+        var onceFunc = (...args) => {
+            callback.apply(this,args)
+            this.off(event,onceFunc)
+        }
+        this.on(event,onceFunc)
+        return this
+    }
+}
+function echo(msg) { console.log(msg)};
+function echo2(msg) { console.log(msg + 'sss')};
+function echo3(msg) { console.log(msg + 'ddd')};
+var event = new Event();
+event.on('testOn',echo)
+event.on('testOn',echo2)
+event.on('testOn',echo3)
+event.trigger('testOn','11111')
+event.once('test', echo);
+event.trigger('test','222')
+event.trigger('test','333')
+event.trigger('testOn','44444')
+event.off('testOn',echo)
+event.trigger('testOn','offff')
+event.off('testOn')
+event.trigger('testOn','offffall')
+
+// 题5
+var num = 1234567890.12
+// 正则
+var resultNum = (num + '').replace(/(\d)(?=(\d{3})+\.)/g, function ($0, $1) {
+    return $1 + ',';
+})
+console.log(resultNum) //1,234,567,890.12
+// 非正则
+var resultNum2 = num.toLocaleString()
+console.log(resultNum2); //1,234,567,890.12
+
+// 题6
+let timer = setTimeout(()=>{
+    console.log(1);
+    let inner = `
+        <tr><td>1</td><td>2</td><td>3</td></tr>
+        <tr><td>12</td><td>22</td><td>32</td></tr>
+    `
+    $('table').append(inner)
+    clearTimeout(timer)
+},1000)
+// $('table').on('click','td',function(e){
+//     console.log(e);
+//     alert(e.target.innerHTML)
+// })
+$('body').on('click','table td',function(e){
+    console.log(e);
+    alert(e.target.innerHTML)
+})
+</script>
+</html>
