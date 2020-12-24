@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=da75a7f5fc7fbc604928a9e510c5e848&plugin=Map3D,AMap.DistrictLayer,AMap.CircleEditor,AMap.Geocoder,AMap.Scale,AMap.ToolBar,AMap.DistrictSearch,AMap.MouseTool,AMap.PolyEditor,AMap.MapType"></script>
+    <script src="https://webapi.amap.com/loca?v=1.3.2&key=da75a7f5fc7fbc604928a9e510c5e848"></script>
+    <style>
+        body,html{
+            margin: 0;
+            padding: 0;
+        }
+        .map{
+            width: 100%;
+            height: 100vh;
+        }
+        .dropmarker{
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #EC564C;
+            line-height: 26px;
+            text-align: center;
+            color: white;
+        }
+        .dropmarker::after{
+            content: '';
+            width: 0px;
+            height: 0px;
+            border: 10px transparent solid;
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-right: 10px solid transparent;
+            border-top: 15px solid #EC564C;
+            border-left: 10px solid transparent;
+        }
+        .dropmarker::before{
+            content: '';
+            width: 16px;
+            height: 6px;
+            background-color: #6E6E6C;
+            border-radius: 12px / 5px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -14px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="map" id="container"></div>     
+</body>
+<script>
+var cpoint = [116.411568,39.908071]; //地图中心点坐标
+var centerpointer = new AMap.LngLat(cpoint[0],cpoint[1]);
+
+var map = new AMap.Map('container', {
+    resizeEnable: true,
+    zoom: 11, //初始化地图层级
+    center: cpoint, //初始化地图中心点
+    // ... 其他参数
+})
+
+function drawMark(map,center,content,otherConfig={}){
+    var marker = new AMap.Marker({
+        map: map,
+        zIndex:200,
+        anchor:'bottom-center', // 设置锚点方位
+        position: center, //基点位置
+        offset: new AMap.Pixel(0, -14), //相对于基点的偏移位置
+        content: content,   //自定义点标记覆盖物内容
+        ...otherConfig //其他定制化设置
+    });
+    marker.setMap(map);  //在地图上添加点
+    return marker
+}
+
+
+var content = '<div class="dropmarker">' + 1 + '</div>'
+
+drawMark(map,centerpointer,content)
+</script>
+</html>
