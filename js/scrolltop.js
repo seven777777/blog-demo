@@ -19,19 +19,23 @@ class TopScroll {
         this.initTopScrollDom()
     }
     initTopScrollDom() {
+        const scrollHeight = this.box.offsetHeight - this.box.clientHeight + 'px'
+        // 如果高度为零，则说明没有生成滚动条，则不需要以下操作
+        if (scrollHeight == '0px') return
+
         //新增顶部滚动条盒子
         let topScrollBox = document.createElement('div')
         topScrollBox.style.position = 'absolute'
         topScrollBox.style.left = 0
         topScrollBox.style.bottom = '100%'
         topScrollBox.style.right = 0
-        topScrollBox.style.height = '15px'
+        topScrollBox.style.height = scrollHeight
         topScrollBox.style.overflow = 'auto'
         // 顶部滚动条盒子内部元素
         // 需设置其宽度与实际滚动部分宽度相同
         let topScrollInner = document.createElement('div')
         topScrollInner.style.width = this.innerBox.clientWidth + 'px'
-        topScrollInner.style.height = '15px'
+        topScrollInner.style.height = scrollHeight
         topScrollBox.appendChild(topScrollInner)
 
         // 在原来的div外面套一层div，用来增加新的顶部滚动条盒子
@@ -43,6 +47,7 @@ class TopScroll {
         wrapBox.appendChild(topScrollBox)
         wrapBox.appendChild(this.box)
 
+        console.log(this.box, this.innerBox)
         // 滚动监听，实现同步滚动
         this.scrollListener(topScrollBox, this.box)
     }
