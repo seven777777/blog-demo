@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>顶部横向滚动条</title>
+    <style>
+        .outerBox {
+            width: 700px;
+            height: 300px;
+            overflow: auto;
+            border: 1px sold saddlebrown;
+            margin: 20px auto;
+        }
+
+        .innerBox {
+            width: max-content;
+        }
+
+        /* 表格的一些美化样式 */
+        th,
+        td {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        tr {
+            height: 36px;
+        }
+
+        thead {
+            position: sticky;
+        }
+
+        tbody tr:nth-child(2n) {
+            background-color: #f3f3f3;
+        }
+
+        /* ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            border-radius: 50px;
+            background: #aaa;
+        }
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+            background: #fff;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="outerBox" id="MyScroll">
+        <table class="innerBox">
+            <thead>
+                <tr>
+                    <th width="100">ID</th>
+                    <th>序号</th>
+                    <th>楼盘名称</th>
+                    <th>所属区域</th>
+                    <th>所属环线</th>
+                    <th>所属板块</th>
+                    <th>成交套数</th>
+                    <th>成交面积</th>
+                    <th>成交面积</th>
+                    <th>成交面积</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>中远两湾城</td>
+                    <td>松江区</td>
+                    <td>外环以内</td>
+                    <td>松江新城西区板块</td>
+                    <td>3</td>
+                    <td>310,732</td>
+                    <td>5,310,732</td>
+                    <td>5,310,732</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./js/scrolltop.js"></script>
+    <script>
+        new TopScroll('MyScroll')
+    </script>
+</body>
+
+</html>
