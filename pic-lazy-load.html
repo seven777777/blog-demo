@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrap {
+            width: 400px;
+            height: 700px;
+            margin: 40px auto;
+            border-radius: 4px;
+            box-shadow: 1px 0 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .head {
+            height: 60px;
+            background-color: darkcyan;
+        }
+
+        .main {
+            flex: 1;
+            overflow: auto;
+            padding: 0 10px;
+            margin-bottom: 150px;
+        }
+
+        .pic-box {
+            height: 150px;
+            box-shadow: 1px 0 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .img {
+            width: 200px;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="head"></div>
+        <div class="main">
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/cdcd96234a0323f68282815c2e89d47765d06943.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/d572d17dbb9535b8f267bb63f3105847f8d67a8e.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/a7aa95c4b7137b7655b99c584dec70e4b90ddf5f.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/30f0f177ea812caa9c7fef30440fe4adcd8cd836.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/5fff7ab3855c90b817ed2fc850b343b817e39915.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/3f9af02ca5e4fbad45b99193f5152e43d519f55f.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/537c39b7c307505eb3be498b9849029d780c9779.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/0e43ed1193b5061789169c63faa4d94a85164cba.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/12c3e43dbe7275d41c1e97654de31e04f81b9f1a.png" src="" />
+            </div>
+            <div class="pic-box">
+                <img class="img"
+                    data-src="http://file.cricbigdata.com/view/cdd3982340fbafda25e176f593d2b417cfc60a48.png" src="" />
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script>
+
+    (function () {
+        const images = document.getElementsByClassName('img')
+        // 法一：滚动监听
+        function setImgLoad() {
+            console.log("do");
+            for (let i = 0; i < images.length; i++) {
+                let img = images[i]
+                const imgTop = img.getBoundingClientRect('.main').top
+                if (imgTop < $('.main').offset().top + $('.main').height()) {
+                    if (!img.getAttribute('src')) {
+                        const url = img.getAttribute('data-src')
+                        img.setAttribute('src', url)
+                        console.log('加载');
+                    }
+                }
+            }
+        }
+        // setImgLoad()
+        // $('.main').on('scroll', setImgLoad)
+
+        // 法二：使用IntersectionObserver构造函数
+        // IntersectionObserver实例有两个方法,observe(观察一个节点)和unobserve（解除观察）
+        const callback = (entries) => {
+            console.log(entries);
+            entries.forEach(entry => {
+                console.log(entry);
+                // 每个entry数组都有一个isIntersecting属性(是否在可视区域)
+                if (entry.isIntersecting) {
+                    // target代表着目标元素
+                    const image = entry.target;
+                    const data_src = image.getAttribute('data-src');
+                    image.setAttribute('src', data_src);
+                    observer.unobserve(image);
+                }
+            })
+        }
+        const observer = new IntersectionObserver(callback)
+        for (let image of images) {
+            observer.observe(image)
+        }
+
+    })()
+</script>
+
+</html>
