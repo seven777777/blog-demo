@@ -123,9 +123,7 @@
         // 法二：使用IntersectionObserver构造函数
         // IntersectionObserver实例有两个方法,observe(观察一个节点)和unobserve（解除观察）
         const callback = (entries) => {
-            console.log(entries);
             entries.forEach(entry => {
-                console.log(entry);
                 // 每个entry数组都有一个isIntersecting属性(是否在可视区域)
                 if (entry.isIntersecting) {
                     // target代表着目标元素
