@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Grid</title>
+
+        <style>
+            .grid-container {
+                display: grid;
+                background-color: aliceblue;
+                grid-template-columns: 100px 100px 100px;
+                grid-template-rows: 100px 100px 100px;
+                gap: 20px 20px;
+                grid-template-areas:
+                    'left top top'
+                    'left middle right'
+                    'bottom bottom right';
+            }
+            .left,
+            .top,
+            .middle,
+            .bottom,
+            .right {
+                background-color: bisque;
+                display: flex;
+                align-items: center;
+            }
+            .left {
+                grid-area: left;
+            }
+            .top {
+                grid-area: top;
+            }
+            .middle {
+                grid-area: middle;
+            }
+            .bottom {
+                grid-area: bottom;
+            }
+            .right {
+                grid-area: right;
+            }
+
+            .grid-container2 {
+                margin-top: 30px;
+                height: 600px;
+                display: grid;
+                background-color: aliceblue;
+                gap: 20px;
+                grid-template-columns: [c1] 100px [c2] 100px [c3] auto [c4];
+                grid-template-rows: [r1] 100px [r2] 100px [r3];
+                grid-auto-flow: column;
+                place-content: center;
+            }
+            .item {
+                background-color: bisque;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .item-2 {
+                grid-column-start: c2;
+                grid-column-end: c4;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grid-container">
+            <div class="left">left</div>
+            <div class="bottom">bottom</div>
+            <div class="right">right</div>
+            <div class="top">top</div>
+            <div class="middle">middle</div>
+        </div>
+        <div class="grid-container2">
+            <div class="item">leftleftleftleftleftleftleftleft</div>
+            <div class="item">middle</div>
+            <div class="item item-2">right</div>
+            <div class="item">right</div>
+            <div class="item">middle</div>
+            <div class="item">right</div>
+            <div class="item">right</div>
+            <div class="item">middle</div>
+            <div class="item">right</div>
+        </div>
+    </body>
+</html>
