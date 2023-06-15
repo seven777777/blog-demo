@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视差特效</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card{
+            width: 175px;
+            height: 250px;
+            border-radius: 8px;
+            box-shadow: 0px 10px 20px 20px rgba(0, 0, 0, 0.17);
+            background-image: url(./images/testpic02.jpg);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: 110% 110%;
+            overflow: hidden;
+        }
+        .card img{
+            height: 100%;
+            position: relative;
+            left: 25px;
+            top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="./images/testpic03.png" alt="人物" />
+    </div>
+</body>
+
+<script>
+    const card = document.querySelector('.card')
+    const img = document.querySelector('img')
+
+    // 计算函数
+    // 背景图移动计算
+    function computedBGPosition(num,doc){
+        return (60 - Number((num / doc * 20).toFixed(1)) + '%')
+    }
+    // 计算 translate
+    function computedTransform(num, doc) {
+        return (num / doc * 40 - 20).toFixed(1)
+    }
+
+    document.addEventListener('mousemove',e=>{
+        // 旋转容器
+        card.style.transform = `
+            rotateX(${computedTransform(e.clientX, window.innerWidth)}deg)
+            rotateY(${computedTransform(e.clientY, window.innerHeight)}deg)
+        `
+        // 移动背景
+        card.style.backgroundPosition = `
+            ${computedBGPosition(e.clientX, window.innerWidth)} 
+            ${computedBGPosition(e.clientY, window.innerHeight)}
+        `
+        // 移动图片
+        img.style.transform = `
+            translateX(${computedTransform(e.clientX, window.innerWidth)}px)
+            translateY(${computedTransform(e.clientY, window.innerHeight)}px)
+        `
+
+        
+    })
+</script>
+</html>

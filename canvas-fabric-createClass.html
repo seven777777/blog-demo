@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas-fabric-createClass</title>
+    <style>
+        .canvas_wrap{
+            margin: 10px 30px;
+            width: 800px;
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        .controls {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas_wrap" id="container">
+		<canvas id="c" width="800" height="600"></canvas>
+  </div>
+    <!-- <canvas id="c" width="800" height="600" style="border: 1px solid #ccc;"></canvas> -->
+</body>
+<script src="https://unpkg.com/fabric@4.6.0/dist/fabric.min.js"></script>
+<script src="https://unpkg.com/echarts@5.3.2/dist/echarts.min.js"></script>
+<script>
+    // 创建画布
+    let canvas = new fabric.Canvas('c',{
+        container: 'container'
+    })
+
+    // 创建半圆对象 继承 fabric.Object
+    let Semicircle = fabric.util.createClass(fabric.Object,{
+        // 初始化
+        initialize(options){
+            this.callSuper('initialize',options)
+            this.width = 100
+            this.height = 50
+        },
+        // 渲染
+        _render(ctx){
+            ctx.strokeStyle = this.stroke || '#333' // 初始化描边颜色
+            ctx.lineWidth = this.strokeWidth || 1 // 初始化描边宽度
+            ctx.fillStyle = this.fill || '#333' // 初始化填充色
+
+            ctx.beginPath() //开始绘制路径
+            ctx.arc(0, -25, 50, 0, 180 * Math.PI / 180) // 绘制半圆
+            ctx.closePath()
+            ctx.stroke()
+            ctx.fill()
+        }
+    })
+
+    let semicircle = new Semicircle({
+        top:10,
+        left:10,
+        stroke:'#7bcfa6',
+        fill:'#ed5736',
+        strokeWidth:10
+    })
+
+    canvas.add(semicircle)
+
+
+    // 创建echarts类
+    fabric.Echarts = fabric.util.createClass(fabric.Rect,{
+        type:'echarts',
+        elementType: 'element',
+        stateProperties: fabric.Object.prototype.stateProperties.concat(['chartOption']),
+        cacheProperties: fabric.Object.prototype.stateProperties.concat(['chartOption']),
+        element: null,
+        hasControls:true,
+        lockRotation:false,
+        instance:null,
+        initialize(chartOption,options){
+            options = options || {};
+            this.callSuper('initialize',options)
+            this.set({
+                chartOption,
+                fill: 'rgba(255, 255, 255, 0)',
+                stroke: 'rgba(255, 255, 255, 0)',
+            })
+        },
+        setSource({chartOption}){
+            if(chartOption){
+                this.instance.setOption(chartOption)
+            }
+        },
+        setChartOption({chartOption}){
+            this.set({ chartOption });
+            this.distroyChart();
+            this.createChart(chartOption);
+        },
+        createChart(chartOption){
+            this.instance = echarts.init(this.element);
+            if(!chartOption){
+                this.instance.setOption({
+                    xAxis: {},
+                    yAxis: {},
+                    series: [
+                        {
+                            type: 'bar',
+                            data: [
+                            [0, 1],
+                            [1, 2],
+                            [2, 3],
+                            [3, 4],
+                            ],
+                        },
+                    ]
+                })
+            } else {
+                this.instance.setOption(chartOption);
+            }
+        },
+        distroyChart() {
+            if (this.instance) {
+                this.instance.dispose();
+            }
+        },
+        toObject: function (propertiesToInclude) {
+            return fabric.util.object.extend(this.callSuper('toObject', propertiesToInclude));
+        },
+        createElement(){
+            const {width,height}=this
+            const container = document.getElementById(this.canvas.container)
+            this.element = fabric.util.makeElement('div', {
+            id: `echarts_container`,
+            class: 'item__container',
+            style: `
+                width: ${width}px;
+                height: ${height}px;
+                `
+            })
+            container.appendChild(this.element)
+            this.createChart(this.chartOption)
+            this.updateElement()
+            this.canvas.on({
+                'object:moving': (e) => this.updateElement(),
+                'object:scaling': (e) => this.updateElement(),
+                'object:rotating': (e) => this.updateElement(),
+                'object:skewing': (e) => this.updateElement(),
+                'object:modified': (e) => this.updateElement(),
+                'mouse:move': (e) => {
+                    this.updateElement()
+                },
+                'mouse:wheel': (e) => {
+                    this.updateElement()
+                }
+            })
+        },
+        updateElement () {
+            const canvas = this.canvas
+            if (!canvas) return
+            const { width, height, editable, fill } = this
+            const matrix = this.calcTransformMatrix()
+            const viewTransfrom = fabric.util.qrDecompose(canvas.viewportTransform)
+            const { angle, scaleX, scaleY, translateX, translateY } = fabric.util.qrDecompose(matrix)
+            const left = (translateX - width * scaleX / 2) * viewTransfrom.scaleX + viewTransfrom.translateX
+            const top = (translateY - height * scaleY / 2) * viewTransfrom.scaleY + viewTransfrom.translateY
+            const origin = 'center center'
+            this.element.style = `
+                background: ${fill};
+                transform-origin: ${origin};
+                transform: rotate(${angle}deg) translate(0px,0px) scale(1,1);
+                width: ${width * scaleX * viewTransfrom.scaleX}px;
+                height: ${height * scaleY * viewTransfrom.scaleY}px;
+                position: absolute;
+                left: ${left}px;
+                top: ${top}px;
+                user-select:none;
+                pointer-events:none;`
+        },
+        _render(ctx) {
+            this.callSuper('_render', ctx);
+            if (!this.element) {
+                this.createElement()
+            } else {
+                this.updateElement()
+                this.instance.resize()
+            }
+        },
+    })
+
+    fabric.Echarts.fromObject = (object, callback) => {
+      return callback(new fabric.Echarts(object.chartOption, object));
+    };
+    fabric.Echarts.async = true;
+    const echarts_Object = new fabric.Echarts(
+      {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        legend: {},
+        xAxis: {
+          type: 'category',
+          data: ['1', '2', '3'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '数据1',
+            type: 'bar',
+            barWidth: '30',
+            data: [100, 52, 200,]
+          },
+          {
+            name: '数据2',
+            type: 'line',
+            barWidth: '30',
+            data: [120, 100, 150]
+          }
+        ]
+      },
+      {
+
+        left: 100,
+        top: 20,
+        width: 300,
+        height: 240,
+        fill: '#000',
+      }
+    );
+    canvas.add(echarts_Object);
+    
+
+</script>
+</html>

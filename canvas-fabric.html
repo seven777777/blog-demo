@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas-fabric</title>
+</head>
+<body>
+    参考：<a href="https://juejin.cn/post/7026941253845516324#heading-41" target="_blank">https://juejin.cn/post/7026941253845516324#heading-41</a>
+    <canvas width="400" height="400" id="c" style="border: 1px solid #ccc;"></canvas>
+</body>
+
+<script src="https://unpkg.com/fabric@4.6.0/dist/fabric.min.js"></script>
+<script>
+    const canvas = new fabric.Canvas('c',{
+        isDrawingMode: false, // 开启绘图模式
+        backgroundColor:'#ddd'
+    })//可交互
+    // const canvas = new fabric.StaticCanvas('c')//不可交互
+
+    // 设置画笔
+    canvas.freeDrawingBrush.color = '#11999e'
+    canvas.freeDrawingBrush.width = 10
+    canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+        blur:10,
+        offsetX:10,
+        offsetY:10,
+        affectStroke: true,
+        color: '#30e3ca',
+    })
+
+    // 创建一个长方形
+    const rect = new fabric.Rect({
+        top:30,
+        left:30,
+        width:100,
+        height:60,
+        fill:'red'
+    })
+
+    // 创建可编辑文本
+    const text = new fabric.IText('测试文字',{
+        top: 40,
+        left: 40,
+        fontSize: 120,
+        backgroundColor: 'green', // 背景色：绿色
+        fill: 'orange', // 填充色：橙色
+        stroke: '#f6416c', // 边框颜色：粉色
+        strokeWidth: 3, // 边框粗细：3px
+        strokeDashArray: [20, 5, 14], // 边框虚线规则：填充20px 空5px 填充14px 空20px 填充5px ……
+        shadow: '10px 20px 6px rgba(10, 20, 30, 0.4)', // 投影：向右偏移10px，向下偏移20px，羽化6px，投影颜色及透明度
+        transparentCorners: false, // 选中时，角是被填充了。true 空心；false 实心
+        borderColor: '#16f1fc', // 选中时，边框颜色：天蓝
+        borderScaleFactor: 5, // 选中时，边的粗细：5px
+        borderDashArray: [20, 5, 10, 7], // 选中时，虚线边的规则
+        cornerColor: "#a1de93", // 选中时，角的颜色是 青色
+        cornerStrokeColor: 'pink', // 选中时，角的边框的颜色是 粉色
+        cornerStyle: 'circle', // 选中时，叫的属性。默认rect 矩形；circle 圆形
+        cornerSize: 20, // 选中时，角的大小为20
+        cornerDashArray: [10, 2, 6], // 选中时，虚线角的规则
+        selectionBackgroundColor: '#7f1300', // 选中时，选框的背景色：朱红
+        padding: 40, // 选中时，选择框离元素的内边距：40px
+        borderOpacityWhenMoving: 0.6, // 当对象活动和移动时，对象控制边界的不透明度  
+    })
+
+    // 创建属性丰富的圆
+    const circle = new fabric.Circle({
+        top:100,
+        left:100,
+        radius:50,
+        fontSize: 16,
+        lineHeight: 2,
+        backgroundColor: 'green', // 背景色：绿色
+        fill: 'orange', // 填充色：橙色
+        stroke: '#f6416c', // 边框颜色：粉色
+        strokeWidth: 5, // 边框粗细：5px
+        strokeDashArray: [20, 5, 14], // 边框虚线规则：填充20px 空5px 填充14px 空20px 填充5px ……
+        shadow: '10px 20px 6px rgba(10, 20, 30, 0.4)', // 投影：向右偏移10px，向下偏移20px，羽化6px，投影颜色及透明度
+        transparentCorners: false, // 选中时，角是被填充了。true 空心；false 实心
+        borderColor: '#16f1fc', // 选中时，边框颜色：天蓝
+        borderScaleFactor: 5, // 选中时，边的粗细：5px
+        borderDashArray: [20, 5, 10, 7], // 选中时，虚线边的规则
+        cornerColor: "#a1de93", // 选中时，角的颜色是 青色
+        cornerStrokeColor: 'pink', // 选中时，角的边框的颜色是 粉色
+        cornerStyle: 'circle', // 选中时，叫的属性。默认rect 矩形；circle 圆形
+        cornerSize: 20, // 选中时，角的大小为20
+        cornerDashArray: [10, 2, 6], // 选中时，虚线角的规则
+        selectionBackgroundColor: '#7f1300', // 选中时，选框的背景色：朱红
+        padding: 10, // 选中时，选择框离元素的内边距：40px
+        borderOpacityWhenMoving: 0.6, // 当对象活动和移动时，对象控制边界的不透明度 
+    })
+
+    const gradient1 = new fabric.Gradient({
+        type: 'linear', // linear or radial
+        gradientUnits: 'pixels', // pixels or pencentage 像素 或者 百分比
+        coords: { x1: 0, y1: 0, x2: circle.width, y2: 0 }, // 至少2个坐标对（x1，y1和x2，y2）将定义渐变在对象上的扩展方式
+        colorStops:[ // 定义渐变颜色的数组
+            { offset: 0, color: 'red' },
+            { offset: 0.2, color: 'orange' },
+            { offset: 0.4, color: 'yellow' },
+            { offset: 0.6, color: 'green' },
+            { offset: 0.8, color: 'blue' },
+            { offset: 1, color: 'purple' },
+        ]
+    })
+    const gradient2 = new fabric.Gradient({
+        type: 'radial', // linear or radial
+        gradientUnits: 'pixels', // pixels or pencentage 像素 或者 百分比
+        coords: {
+            r1: 50, // 该属性仅径向渐变可用，外圆半径
+            r2: 0, // 该属性仅径向渐变可用，外圆半径  
+            x1: 50, // 焦点的x坐标
+            y1: 50, // 焦点的y坐标
+            x2: 50, // 中心点的x坐标
+            y2: 50, // 中心点的y坐标
+        },
+        colorStops: [
+            { offset: 0, color: '#fee140' },
+            { offset: 1, color: '#fa709a' }
+        ]
+    })
+    circle.set('fill',gradient2)
+
+
+    let triangle = new fabric.Triangle({
+        top: 100,
+        left: 100,
+        width: 80,
+        height: 100,
+        fill: 'blue',
+        angle: 30 // 旋转30度
+    })
+
+
+    const ellipse = new fabric.Ellipse({
+        // top:20,
+        // left:20,
+        rx:100,
+        ry:50,
+        fill:'#ddd',
+        originX:'center',//旋转x轴：left, right, center
+        originY:'center',
+    })
+    const text2 = new fabric.IText('Hello World!',{
+        // top:40,
+        // left:20,
+        fontSize:20,
+        originX:'center',
+        originY:'center',
+    })
+    // 建组
+    const group = new fabric.Group([ellipse,text2],{
+        top:50,
+        left:100,
+    })
+    
+    group.on('selected',(opt)=>{
+        console.log('选中group',opt)
+    })
+
+    // ellipse.animate('angle', '+=360', {
+    //     onChange:canvas.renderAll.bind(canvas), // 每次刷新的时候都会执行
+    //     duration: 2000, // 执行时间
+    //     easing: fabric.util.ease.easeOutBounce, // 缓冲效果
+    // })
+
+    // 监听滚轮事件
+    canvas.on('mouse:wheel',opt=>{
+        let delta = opt.e.deltaY // 滚轮向上滚一下是 -100，向下滚一下是 100
+        let zoom = canvas.getZoom() // 获取画布当前缩放值
+
+        // 控制缩放范围在 0.01~20 的区间内
+        zoom *= 0.999 ** delta
+        if (zoom > 20) zoom = 20
+        if (zoom < 0.01) zoom = 0.01
+
+        // 设置画布缩放比例
+        // 关键点！！！
+        // 参数1：将画布的所放点设置成鼠标当前位置
+        // 参数2：传入缩放值
+        canvas.zoomToPoint({
+            x: opt.e.offsetX, // 鼠标x轴坐标
+            y: opt.e.offsetY  // 鼠标y轴坐标
+        },zoom)
+    })
+
+    // 鼠标按下时触发
+    canvas.on('mouse:down',opt=>{
+        let evt = opt.e
+        console.log(evt)
+        if(evt.altKey === true){//是否按住alt
+            canvas.isDragging = true // isDragging 是自定义的，开启移动状态
+            canvas.lastPosX = evt.clientX // lastPosX 是自定义的
+            canvas.lastPosY = evt.clientY // lastPosY 是自定义的
+        }
+    })
+
+    // 鼠标移动时触发
+    canvas.on('mouse:move',opt=>{
+        if(canvas.isDragging){
+            let evt = opt.e
+            let vpt = canvas.viewportTransform // 聚焦视图的转换
+            vpt[4] += evt.clientX - canvas.lastPosX
+            vpt[5] += evt.clientY - canvas.lastPosY
+            canvas.requestRenderAll() // 重新渲染
+            canvas.lastPosX  = evt.clientX
+            canvas.lastPosY  = evt.clientY
+        }
+    })
+    canvas.on('mouse:up', opt => { // 鼠标松开时触发
+        canvas.setViewportTransform(canvas.viewportTransform) // 设置此画布实例的视口转换  
+        canvas.isDragging = false // 关闭移动状态
+    })
+
+
+    canvas.selection = true // 画布是否可选中。默认true；false 不可选中
+    canvas.selectionColor = 'rgba(106, 101, 216, 0.3)' // 画布鼠标框选时的背景色
+    canvas.selectionBorderColor = "#1d2786" // 画布鼠标框选时的边框颜色
+    canvas.selectionLineWidth = 6 // 画布鼠标框选时的边框厚度
+    canvas.selectionDashArray = [30, 4, 10] // 画布鼠标框选时边框虚线规则
+    canvas.selectionFullyContained = true // 只选择完全包含在拖动选择矩形中的形状
+
+
+    // 裁剪
+    const clipPath = new fabric.Group([
+        new fabric.Circle({radius:70,top:-70,left:-70}),
+        new fabric.Circle({radius:40,top:-95,left:-95}),
+        new fabric.Circle({radius:40,top:-95,left:15}),
+    ],{left:-95,top:-95})
+    const groupNew = new fabric.Group([
+        new fabric.Rect({ width: 100, height: 100, fill: 'red' }),
+        new fabric.Rect({ width: 100, height: 100, fill: 'yellow', left: 100 }),
+        new fabric.Rect({ width: 100, height: 100, fill: 'blue', top: 100 }),
+        new fabric.Rect({
+        width: 100,
+        height: 100,
+        fill: 'green',
+        left: 100,
+        top: 100
+        })
+    ])
+    // canvas.clipPath = new fabric.Circle({ radius: 100, top: 0, left: 50 })
+    groupNew.clipPath = clipPath
+
+
+    canvas.add(groupNew)
+
+    canvas.viewportCenterObject(groupNew)
+
+
+    // 输出图片
+    // 取得图像的数据 URI
+    var imgURI = canvas.toDataURL('png');
+    // 显示图像
+    var image = document.createElement("img");
+    image.src = imgURI;
+    document.body.appendChild(image);
+
+    // toDataURL这个操作可能会打断 canvas 的渲染，所以之后要再执行以下 canvas.requestRenderAll()
+    canvas.requestRenderAll()
+
+
+    // 输出svg
+    var svg = document.createElement("div");
+    svg.innerHTML = canvas.toSVG()
+    document.body.appendChild(svg);
+
+</script>
+</html>
